@@ -1,0 +1,1 @@
+This dir contains the resources for sub-setting and filtering the data between databases. It uses [condenser](https://github.com/TonicAI/condenser) with a minor tweak to fix some issues. The config used is always the 'config.json' file in the condenser repo root. Project is pretty quiet but might be worth contributing to.

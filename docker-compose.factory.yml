@@ -1,0 +1,14 @@
+services:
+
+  factory:
+    image: factory
+    build: factory
+    container_name: factory
+    depends_on:
+      src_db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=src_db
+      - DB_USER=root
+      - DB_PASSWORD=toor
+      - DB_NAME=music

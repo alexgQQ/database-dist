@@ -1,0 +1,13 @@
+services:
+
+  src_db:
+    container_name: src_db
+    image: mariadb:10.10
+    environment:
+      - MARIADB_ROOT_PASSWORD=toor
+      - MARIADB_DATABASE=music
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect"]
+      interval: 3s
+      retries: 3
+      timeout: 5s

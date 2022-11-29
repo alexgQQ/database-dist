@@ -1,0 +1,30 @@
+services:
+
+  dst_db:
+    container_name: dst_db
+    image: mariadb:10.10
+    environment:
+      - MARIADB_ROOT_PASSWORD=toor
+      - MARIADB_DATABASE=music
+    volumes:
+      - type: bind
+        source: ./backup
+        target: /host-mnt
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect"]
+      interval: 3s
+      retries: 3
+      timeout: 5s
+
+  subset:
+    image: condenser
+    build:
+      context: ./condenser
+      args:
+        CONDENSER_CONFIG: config.genre.json
+    container_name: subset
+    depends_on:
+      src_db:
+        condition: service_healthy
+      dst_db:
+        condition: service_healthy
