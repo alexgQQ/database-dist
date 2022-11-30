@@ -1,0 +1,53 @@
+name: Subset and package
+on: workflow_dispatch
+
+jobs:
+  container-job:
+    runs-on: ubuntu-latest
+    container: node:10.18-buster
+
+    services:
+      mariadb:
+        image: mariadb:10.10
+        env:
+          MARIADB_ROOT_PASSWORD: toor
+          MARIADB_DATABASE: music
+        ports:
+          - 3306:3306
+
+    steps:
+      - name: Check database dist repo
+        uses: actions/checkout@v3
+      - name: Checkout condenser repo
+        uses: actions/checkout@v3
+        with:
+          repository: alexgQQ/condenser
+          path: condenser/condenser
+          ref: buffered
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip' # caching pip dependencies
+      - run: pip install toposort psycopg2-binary mysql-connector-python
+      - run: |
+          cp condenser/config.json condenser/condenser/config.json
+          cd condenser/condenser
+          ./entrypoint.sh
+        env:
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_DATABASE: music
+      - run: |
+          sudo apt update -yq
+          sudo apt install -yq mariadb-backup
+      - run: mariabackup --host 127.0.0.1 --user=root --password=toor --backup --stream=xbstream | zstd > db-build/music.zst
+      - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
+        with:
+          gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
+          registry: gcr.io
+          project_id: ${{ secrets.GCLOUD_PROJECT_ID }}
+          image_name: micro-db
+          image_tag: latest
+          dockerfile: ./db-build/Dockerfile.actions
+          context: ./db-build
