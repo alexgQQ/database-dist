@@ -9,9 +9,9 @@ ARG CONDENSER_CONFIG=config.json
 #     pip install toposort psycopg2-binary mysql-connector-python
 RUN apt-get update -yq && \
     apt-get install -yq git mariadb-server && \
+    git clone -b buffered https://github.com/alexgQQ/condenser.git && \
     pip install toposort psycopg2-binary mysql-connector-python
 
 WORKDIR /condenser
-COPY condenser/* /condenser
 COPY $CONDENSER_CONFIG /condenser/config.json
 CMD ["python", "direct_subset.py"]
