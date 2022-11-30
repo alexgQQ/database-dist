@@ -24,8 +24,8 @@ jobs:
           path: condenser/condenser
           ref: buffered
       - run: |
-          apt update -yq
-          apt install -yq mariadb-backup lsb-release
+          sudo apt update -yq
+          sudo apt install -yq mariadb-backup lsb-release
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
