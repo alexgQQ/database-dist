@@ -14,4 +14,5 @@ RUN apt-get update -yq && \
 
 WORKDIR /condenser
 COPY $CONDENSER_CONFIG /condenser/config.json
-CMD ["python", "direct_subset.py"]
+COPY entrypoint.sh /condenser
+CMD ["./entrypoint.sh"]

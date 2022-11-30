@@ -7,10 +7,10 @@
     ],
     "db_type": "mysql",
     "source_db_connection_info": {
-        "user_name": "root",
-        "host": "src_db",
-        "db_name": "music",
-        "password": "toor",
+        "user_name": "DB_USER",
+        "host": "DB_HOST",
+        "db_name": "DB_DATABASE",
+        "password": "DB_PASSWORD",
         "port": 3306
     },
     "destination_db_connection_info": {
