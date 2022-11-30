@@ -5,5 +5,6 @@ sed -i "s/DB_USER/$DB_USER/" config.json
 sed -i "s/DB_PASSWORD/$DB_PASSWORD/" config.json
 sed -i "s/DB_HOST/$DB_HOST/" config.json
 sed -i "s/DB_DATABASE/$DB_DATABASE/" config.json
+sed -i "s/DB_DST_HOST/$DB_DST_HOST/" config.json
 
 python direct_subset.py

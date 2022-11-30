@@ -15,7 +15,7 @@
     },
     "destination_db_connection_info": {
         "user_name": "root",
-        "host": "dst_db",
+        "host": "DB_DST_HOST",
         "db_name": "music",
         "password": "toor",
         "port": 3306
