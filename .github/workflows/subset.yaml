@@ -32,6 +32,7 @@ jobs:
       - run: pip install toposort psycopg2-binary mysql-connector-python
       - run: |
           cp condenser/config.json condenser/condenser/config.json
+          cp condenser/entrypoint.sh condenser/condenser/entrypoint.sh
           cd condenser/condenser
           ./entrypoint.sh
         env:
