@@ -46,7 +46,7 @@ jobs:
           DB_DST_HOST: 127.0.0.1
           DB_DST_DATABASE: music
           DB_DST_PORT: 3306
-      - run: sudo mariabackup --host 127.0.0.1 --user=root --password=toor --backup --stream=xbstream | zstd > db-build/music.zst
+      - run: mysqldump --opt --user=root --password=toor --databases music | zstd -c > db-build/music.sql.zst
       - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
           gcloud_service_key: ${{ secrets.GCLOUD_SERVICE_KEY }}
