@@ -25,22 +25,27 @@ jobs:
           ref: buffered
       - run: |
           sudo apt update -yq
-          sudo apt install -yq mariadb-backup lsb-release mariadb-client mariadb-server
+          sudo apt install -yq mariadb-backup lsb-release mariadb-client mariadb-server gettext-base
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
       - run: pip install toposort psycopg2-binary mysql-connector-python
       - run: |
-          cp condenser/config.json condenser/condenser/config.json
-          cp condenser/entrypoint.sh condenser/condenser/entrypoint.sh
+          cp condenser/config*.json condenser/condenser/
+          cp condenser/entrypoint.sh condenser/condenser/
           cd condenser/condenser
           ./entrypoint.sh
         env:
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_DATABASE: music
-          DB_DST_HOST: "127.0.0.1"
+          DB_SRC_USER: ${{ secrets.DB_USER }}
+          DB_SRC_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          DB_SRC_HOST: ${{ secrets.DB_HOST }}
+          DB_SRC_DATABASE: music
+          DB_SRC_PORT: 3306
+          DB_DST_USER: root
+          DB_DST_PASSWORD: toor
+          DB_DST_HOST: 127.0.0.1
+          DB_DST_DATABASE: music
+          DB_DST_PORT: 3306
       - run: sudo mariabackup --host 127.0.0.1 --user=root --password=toor --backup --stream=xbstream | zstd > db-build/music.zst
       - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:

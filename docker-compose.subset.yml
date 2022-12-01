@@ -20,15 +20,19 @@ services:
     image: condenser
     build:
       context: ./condenser
-      args:
-        CONDENSER_CONFIG: config.genre.json
     container_name: subset
     environment:
-      - DB_USER=root
-      - DB_PASSWORD=toor
-      - DB_HOST=src_db
-      - DB_DATABASE=music
+      - CONDENSER_CONFIG=config.genre.json
+      - DB_SRC_USER=root
+      - DB_SRC_PASSWORD=toor
+      - DB_SRC_HOST=src_db
+      - DB_SRC_DATABASE=music
+      - DB_SRC_PORT=3306
+      - DB_DST_USER=root
+      - DB_DST_PASSWORD=toor
       - DB_DST_HOST=dst_db
+      - DB_DST_DATABASE=music
+      - DB_DST_PORT=3306
     depends_on:
       src_db:
         condition: service_healthy

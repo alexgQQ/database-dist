@@ -7,18 +7,18 @@
     ],
     "db_type": "mysql",
     "source_db_connection_info": {
-        "user_name": "DB_USER",
-        "host": "DB_HOST",
-        "db_name": "DB_DATABASE",
-        "password": "DB_PASSWORD",
-        "port": 3306
+        "user_name": "$DB_SRC_USER",
+        "host": "$DB_SRC_HOST",
+        "db_name": "$DB_SRC_DATABASE",
+        "password": "$DB_SRC_PASSWORD",
+        "port": "$DB_SRC_PORT"
     },
     "destination_db_connection_info": {
-        "user_name": "root",
-        "host": "DB_DST_HOST",
-        "db_name": "music",
-        "password": "toor",
-        "port": 3306
+        "user_name": "$DB_DST_USER",
+        "host": "$DB_DST_HOST",
+        "db_name": "$DB_DST_DATABASE",
+        "password": "$DB_DST_PASSWORD",
+        "port": "$DB_DST_PORT"
     },
     "keep_disconnected_tables": true,
     "max_rows_per_table": 100000,
@@ -26,9 +26,7 @@
         "music.genres", "music.sub_genres"
     ],
     "excluded_tables": [],
-    "dependency_breaks": [
-        {"fk_table": "music.tracks", "target_table": "music.genres"}
-    ],
+    "dependency_breaks": [],
     "fk_augmentation": [],
     "upstream_filters": []
  }
