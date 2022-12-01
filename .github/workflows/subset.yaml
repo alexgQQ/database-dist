@@ -46,6 +46,7 @@ jobs:
           DB_DST_HOST: 127.0.0.1
           DB_DST_DATABASE: music
           DB_DST_PORT: 3306
+          CONDENSER_CONFIG: config.genre.json
       - run: mysqldump --opt --user=root --password=toor --databases music | zstd -c > db-build/music.sql.zst
       - uses: RafikFarhad/push-to-gcr-github-action@v5-beta
         with:
